@@ -1,7 +1,7 @@
 import * as bodyParser from 'body-parser';
 import * as express from 'express';
 import * as logger from 'morgan';
-import * as path from 'path';
+import DetectorRouter from './routes/detector.router';
 
 class App {
     public app: express.Application;
@@ -30,7 +30,8 @@ class App {
             });
         });
 
-        this.app.use(router);
+        this.app.use('/', router);
+        this.app.use('/api/v1', DetectorRouter);
     }
 }
 
