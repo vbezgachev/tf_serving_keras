@@ -1,0 +1,16 @@
+.DS_Store
+
+checkpoints*/
+data/
+__pycache__/
+export/
+.vscode/
+*.pkl
+
+dog_images/
+bottleneck_features/
+.ipynb_checkpoints/
+export_model/
+saved_model/
+
+tensorflow/

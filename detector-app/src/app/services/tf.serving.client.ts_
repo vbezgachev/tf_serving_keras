@@ -1,0 +1,67 @@
+import { environment } from '../../environments/environment';
+
+import { grpc } from 'grpc-web-client';
+import { PredictRequest } from '../../generated/predict_pb';
+import { ModelSpec } from '../../generated/model_pb';
+import { TensorProto } from '../../generated/tensor_pb';
+import { TensorShapeProto } from '../../generated/tensor_shape_pb';
+import { DataType } from '../../generated/types_pb';
+
+export class TfServingClient {
+    // private readonly PROTO_PATH = __dirname + '/src/protos/prediction_service.proto';
+    // private tfServing: any = grpc.load(this.PROTO_PATH).tensorflow.serving;
+    private tfServerUrl: string = environment.tfServerHost + ':' + environment.tfServerPort;
+    // private client: any;
+
+    constructor() {
+        // this.client = new this.tfServing.PredictionService(
+        //     this.tfServerUrl, grpc.credentials.createInsecure());
+    }
+
+    public async predictDogBreed(imageData: string): Promise<string> {
+        // create image buffer for prediction - it must be an array of images
+        const buffer = new Array<string>(imageData);
+
+        // build protobuf for predict request
+        const predictRequest = this.buildPredictRequest(buffer);
+
+        // issue a request
+        const predictResult: Promise<string> = new Promise<string>((resolve, reject) => {
+            this.client.predict(predictRequest, (error, response) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    console.log(response);
+                    resolve("Dog breed detected");
+                }
+            });
+        });
+
+        return predictResult;
+    }
+
+    private buildPredictRequest(buffer: Array<string>): PredictRequest {
+        const model_spec = new ModelSpec();
+        model_spec.setName(environment.modelSpecName);
+        model_spec.setSignatureName(environment.modelSignatureName);
+
+        const request = new PredictRequest();
+        request.setModelSpec(model_spec);
+
+        const inputTensorDim = new TensorShapeProto.Dim();
+        inputTensorDim.setSize(buffer.length);
+
+        const inputTensorShape = new TensorShapeProto();
+        inputTensorShape.addDim(inputTensorDim, 0);
+
+        const inputTensor = new TensorProto();
+        inputTensor.setTensorShape(inputTensorShape);
+        inputTensor.setDtype(DataType.DT_STRING);
+        inputTensor.setStringValList(buffer);
+
+        const inputsMap = request.getInputsMap();
+        inputsMap['examples'] = inputTensor;
+
+        return request;
+    }
+}

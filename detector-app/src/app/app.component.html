@@ -1,0 +1,29 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    Welcome to {{ title }}!
+  </h1>
+  <img width="300" alt="Angular Logo" src="assets/DogIcon.png">
+</div>
+<div>
+  <h2>Please select the folder with dog images: </h2>
+  <input
+    #folderInput
+    type="file"
+    (change)="filesPicked(folderInput.files)"
+    webkitDirectory
+  >
+</div>
+<div>
+  <h2> Here are the images: </h2>
+  <ul id="imageList" class="listing">
+    <li *ngFor="let dog of dogs" class="tn">
+      <div class="image">
+        <img [src]="dog.imageData" width="224"/>
+      </div>
+      <div class="footer">
+        <h5>{{ dog.breedName }}</h5>
+      </div>
+    </li>
+  </ul>
+</div>

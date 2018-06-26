@@ -1,0 +1,61 @@
+{
+  "rules": {
+      "await-promise": true,
+      "class-name": true,
+      "curly": true,
+      "eofline": true,
+      "linebreak-style": [
+          true,
+          "LF"
+      ],
+      "no-any": true,
+      "no-duplicate-variable": true,
+      "no-eval": true,
+      "no-floating-promises": true,
+      "no-internal-module": true,
+      "no-magic-numbers": true,
+      "no-namespace": true,
+      "no-reference": true,
+      "no-trailing-whitespace": true,
+      "no-unused-expression": true,
+      "no-var-keyword": true,
+      "ordered-imports": [
+          true
+      ],
+      "prefer-const": true,
+      "promise-function-async": true,
+      "quotemark": [
+          true,
+          "single"
+      ],
+      "semicolon": [
+          true,
+          "always"
+      ],
+      "space-before-function-paren": [
+          true,
+          {
+              "anonymous": "always",
+              "asyncArrow": "always",
+              "named": "never"
+          }
+      ],
+      "trailing-comma": [
+          true,
+          {
+              "multiline": "always",
+              "singleline": "never"
+          }
+      ],
+      "triple-equals": true,
+      "whitespace": [
+          true,
+          "check-branch",
+          "check-decl",
+          "check-operator",
+          "check-module",
+          "check-separator",
+          "check-type"
+      ]
+  }
+}
