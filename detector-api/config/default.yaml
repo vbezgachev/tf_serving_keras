@@ -1,0 +1,7 @@
+tf_serving:
+  host: '172.17.0.2'
+  port: 9000
+
+model:
+  name: 'dog_breed'
+  signature_name: 'serving_default'

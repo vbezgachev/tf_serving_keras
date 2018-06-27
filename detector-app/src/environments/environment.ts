@@ -4,9 +4,5 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false,
-  tfServerHost: '172.17.0.2',
-  tfServerPort: 9000,
-  modelSpecName: 'dog_breed',
-  modelSignatureName: 'serving_default'
+  production: false
 };

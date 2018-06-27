@@ -6,15 +6,22 @@ const UPLOAD_PATH = 'uploads';
 export class DetectorRouter {
     router: Router;
     private upload: multer.Instance;
+    private storage: multer.StorageEngine;
 
     constructor() {
         this.router = Router();
-        this.upload = multer({ dest: `${UPLOAD_PATH}/` });
+        this.storage = multer.memoryStorage();
+        this.upload = multer({
+            dest: `${UPLOAD_PATH}/`,
+            storage: this.storage,
+        });
         this.init();
     }
 
     private predictBreed(req, res, next): void {
-        console.log(`file name: ${req.file.filename}; original file name: ${req.file.originalname}`);
+        // console.log(`file name: ${req.file.filename}; ` +
+        //     `original file name: ${req.file.originalname} ` +
+        //     `buffer: ${req.file.buffer}`);
         res.send({breed: 'Riesenschnauzer'});
     }
 
