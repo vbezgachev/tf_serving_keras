@@ -22,13 +22,15 @@ export class TfServingClient {
 
     public async predictDogBreed(imageData: string): Promise<string> {
         // create image buffer for prediction - it must be an array of images
-        const buffer = new Array<string>(imageData);
+        // tslint:disable-next-line:no-any
+        const buffer = new Array<any>(imageData);
 
         // build protobuf for predict request
         const predictRequest = this.buildPredictRequest(buffer);
 
         // issue a request
-        const predictResult: Promise<string> = new Promise<string>((resolve, reject) => {
+        // tslint:disable-next-line:no-any
+        const predictResult: Promise<any> = new Promise<any>((resolve, reject) => {
             this.client.predict(predictRequest, (error, response) => {
                 if (error) {
                     reject(error);
@@ -42,7 +44,8 @@ export class TfServingClient {
         return predictResult;
     }
 
-    private buildPredictRequest(buffer: Array<string>): Object {
+    // tslint:disable-next-line:no-any
+    private buildPredictRequest(buffer: Array<any>): Object {
         const request = {
             model_spec: {
                 name: this.modelName,
