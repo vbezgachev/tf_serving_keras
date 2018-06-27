@@ -2,7 +2,7 @@ import * as config from 'config';
 import * as grpc from 'grpc';
 
 export class TfServingClient {
-    private readonly PROTO_PATH = __dirname + '/src/protos/prediction_service.proto';
+    private readonly PROTO_PATH = __dirname + '/../protos/prediction_service.proto';
     // tslint:disable-next-line:no-any
     private tfServing: any = grpc.load(this.PROTO_PATH).tensorflow.serving;
     private tfServerUrl: string;
@@ -20,7 +20,8 @@ export class TfServingClient {
             this.tfServerUrl, grpc.credentials.createInsecure());
     }
 
-    public async predictDogBreed(imageData: string): Promise<string> {
+    // tslint:disable-next-line:no-any
+    public async predictDogBreed(imageData: any): Promise<string> {
         // create image buffer for prediction - it must be an array of images
         // tslint:disable-next-line:no-any
         const buffer = new Array<any>(imageData);

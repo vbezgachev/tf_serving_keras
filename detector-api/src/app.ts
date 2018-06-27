@@ -23,7 +23,6 @@ class App {
     // configure endpoints
     private routes(): void {
         const router = express.Router();
-
         router.get('/', (req, res, next) => {
             res.json({
                 message: 'Hello from dog breed detector!',
