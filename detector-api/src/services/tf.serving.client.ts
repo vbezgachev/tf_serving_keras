@@ -1,6 +1,8 @@
 import * as config from 'config';
 import * as grpc from 'grpc';
+import { injectable } from 'inversify';
 
+@injectable()
 export class TfServingClient {
     private readonly PROTO_PATH = __dirname + '/../protos/prediction_service.proto';
     // tslint:disable-next-line:no-any
@@ -34,6 +36,7 @@ export class TfServingClient {
         const predictResult: Promise<any> = new Promise<any>((resolve, reject) => {
             this.client.predict(predictRequest, (error, response) => {
                 if (error) {
+                    console.log(`Error occurred: ${error}`);
                     reject(error);
                 } else {
                     console.log(response);

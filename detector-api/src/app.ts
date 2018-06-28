@@ -1,37 +1,46 @@
+import 'reflect-metadata';
+
 import * as bodyParser from 'body-parser';
 import * as express from 'express';
+import { Container } from 'inversify';
+import { interfaces, InversifyExpressServer, TYPE } from 'inversify-express-utils';
 import * as logger from 'morgan';
-import DetectorRouter from './routes/detector.router';
 
-class App {
-    public app: express.Application;
+import './api/detector.controller';
+import { TfServingClient } from './services/tf.serving.client';
+import { default as TYPES } from './types';
 
-    // use a constructor to configure the application instance
-    constructor() {
-        this.app = express();
-        this.middleware();
-        this.routes();
+export function createApplication(): express.Application {
+    const applicationBuilder = new ApplicationBuilder();
+
+    return applicationBuilder.build();
+}
+
+class ApplicationBuilder {
+    public build(): express.Application {
+        const inversifyContainer = this.createInversifyContainer();
+        const server = new InversifyExpressServer(inversifyContainer);
+
+        server.setConfig((app: express.Application) => {
+            this.middleware(app);
+        });
+
+        return server.build();
     }
 
     // configure a middleware of the Express application
-    private middleware(): void {
-        this.app.use(logger('dev'));
-        this.app.use(bodyParser.json());
-        this.app.use(bodyParser.urlencoded({ extended: false }));
+    private middleware(app: express.Application): void {
+        app.use(logger('dev'));
+        app.use(bodyParser.json());
+        app.use(bodyParser.urlencoded({ extended: false }));
     }
 
-    // configure endpoints
-    private routes(): void {
-        const router = express.Router();
-        router.get('/', (req, res, next) => {
-            res.json({
-                message: 'Hello from dog breed detector!',
-            });
-        });
+    // create container for dependency injection
+    private createInversifyContainer(): Container {
+        const container = new Container();
 
-        this.app.use('/', router);
-        this.app.use('/api/v1', DetectorRouter);
+        container.bind<TfServingClient>(TYPES.TfServingClient).toConstantValue(new TfServingClient());
+
+        return container;
     }
 }
-
-export default new App().app;
