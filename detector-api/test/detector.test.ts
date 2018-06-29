@@ -28,11 +28,12 @@ describe('detectorAPI', () => {
     it('should have breed property', async () => {
         await chai.request(expressApp).post('/api/v1/predict_breed')
             .set('Content-Type', 'multipart/form-data')
-            .attach('dog_image', __dirname + '/resources/dog_image.jpeg')
+            .attach('dog_image', __dirname + '/resources/german_pinscher.jpg')
             .then(res => {
                 console.log(`response body: ${res.body}`);
                 expect(res.status).to.eql(HttpStatus.OK);
                 expect(res.body).to.have.key('breed');
+                expect(res.body.breed).to.eql('German Pinscher');
             });
     }).timeout(REQUEST_TIMEOUT_MS);
 });

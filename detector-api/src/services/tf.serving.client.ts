@@ -1,6 +1,7 @@
 import * as config from 'config';
 import * as grpc from 'grpc';
 import { injectable } from 'inversify';
+import { IndexToBreedMap, UNKNOWN_BREED } from './index.to.breed.map';
 
 @injectable()
 export class TfServingClient {
@@ -39,8 +40,22 @@ export class TfServingClient {
                     console.log(`Error occurred: ${error}`);
                     reject(error);
                 } else {
-                    console.log(response);
-                    resolve('Dog breed detected');
+                    const res = response.outputs.sequential_1.float_val;
+                    console.log(`Number of dog breeds: ${res.length}`);
+
+                    const maxProb = Math.max(...res);
+                    console.log(`Max probability: ${maxProb}`);
+
+                    const indexOfMaxProb = res.indexOf(maxProb);
+                    console.log(`Index of max probability: ${indexOfMaxProb}`);
+
+                    if (indexOfMaxProb in IndexToBreedMap) {
+                        console.log(`Detected breed: ${IndexToBreedMap[indexOfMaxProb]}`);
+                        resolve(IndexToBreedMap[indexOfMaxProb]);
+                    } else {
+                        console.log('Unknown dog breed detected!');
+                        resolve(UNKNOWN_BREED);
+                    }
                 }
             });
         });
