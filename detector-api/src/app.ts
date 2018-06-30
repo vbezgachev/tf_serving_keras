@@ -3,22 +3,22 @@ import 'reflect-metadata';
 import * as bodyParser from 'body-parser';
 import * as express from 'express';
 import { Container } from 'inversify';
-import { interfaces, InversifyExpressServer, TYPE } from 'inversify-express-utils';
+import { InversifyExpressServer } from 'inversify-express-utils';
 import * as logger from 'morgan';
 
 import './api/detector.controller';
 import { TfServingClient } from './services/tf.serving.client';
 import { default as TYPES } from './types';
 
-export function createApplication(): express.Application {
+export function createApplication(tfServingClient: TfServingClient): express.Application {
     const applicationBuilder = new ApplicationBuilder();
 
-    return applicationBuilder.build();
+    return applicationBuilder.build(tfServingClient);
 }
 
 class ApplicationBuilder {
-    public build(): express.Application {
-        const inversifyContainer = this.createInversifyContainer();
+    public build(tfServingClient: TfServingClient): express.Application {
+        const inversifyContainer = this.createInversifyContainer(tfServingClient);
         const server = new InversifyExpressServer(inversifyContainer);
 
         server.setConfig((app: express.Application) => {
@@ -36,10 +36,10 @@ class ApplicationBuilder {
     }
 
     // create container for dependency injection
-    private createInversifyContainer(): Container {
+    private createInversifyContainer(tfServingClient: TfServingClient): Container {
         const container = new Container();
 
-        container.bind<TfServingClient>(TYPES.TfServingClient).toConstantValue(new TfServingClient());
+        container.bind<TfServingClient>(TYPES.TfServingClient).toConstantValue(tfServingClient);
 
         return container;
     }

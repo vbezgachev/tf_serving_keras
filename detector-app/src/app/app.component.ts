@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TfServingClient } from './services/tf.serving.client';
+import { DetectorServiceClient } from './services/detector.service.client';
 
 class DogItem {
     public imageData: string;
@@ -10,7 +10,7 @@ class DogItem {
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
-    providers: [TfServingClient]
+    providers: [DetectorServiceClient]
 })
 export class AppComponent implements OnInit {
     title: String = 'dog breed detector';
@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
     public dogs: DogItem[] = [];
     private fileReader = new FileReader();
 
-    constructor(private tfServingClient: TfServingClient) { }
+    constructor(private tfServingClient: DetectorServiceClient) { }
 
     ngOnInit() { }
 
@@ -53,7 +53,7 @@ export class AppComponent implements OnInit {
         dogBreedPredictionPromise.then((res) => {
             dog.breedName = res;
         });
-            
+
         dogBreedPredictionPromise.catch((err) => {
             dog.breedName = '<Error occurred!>';
         });

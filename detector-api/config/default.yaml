@@ -1,3 +1,6 @@
+service:
+  port: 8001
+
 api:
   base_path: '/api/v1'
 

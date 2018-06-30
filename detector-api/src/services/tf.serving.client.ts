@@ -3,8 +3,13 @@ import * as grpc from 'grpc';
 import { injectable } from 'inversify';
 import { IndexToBreedMap, UNKNOWN_BREED } from './index.to.breed.map';
 
+export interface TfServingClient {
+    // tslint:disable-next-line:no-any
+    predictDogBreed(imageData: any): Promise<string>;
+}
+
 @injectable()
-export class TfServingClient {
+export class TfServingClientImpl implements TfServingClient {
     private readonly PROTO_PATH = __dirname + '/../protos/prediction_service.proto';
     // tslint:disable-next-line:no-any
     private tfServing: any = grpc.load(this.PROTO_PATH).tensorflow.serving;

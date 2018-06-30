@@ -1,22 +1,13 @@
-import { createApplication } from './app';
+import * as config from 'config';
 
-const DEFAULT_PORT = 3000;
-let port: number | string;
+import { createApplication } from './app';
+import { TfServingClientImpl } from './services/tf.serving.client';
 
 (function () {
-    port = normalizePort(process.env.PORT || DEFAULT_PORT);
+    const port: number = config.get<number>('service.port');
+    const expressApp = createApplication(new TfServingClientImpl());
 
-    const expressApp = createApplication();
     expressApp.listen(port);
 
     console.log(`Server listening on port ${port}.`);
 })();
-
-function normalizePort(val: number | string): number | string {
-    const portVal: number = (typeof val === 'string') ? parseInt(val) : val;
-
-    if (isNaN(portVal) || portVal < 0) {
-        return val;
-    }
-    return portVal;
-}
