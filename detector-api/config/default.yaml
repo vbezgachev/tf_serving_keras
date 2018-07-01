@@ -11,3 +11,6 @@ tf_serving:
 model:
   name: 'dog_breed'
   signature_name: 'serving_default'
+
+mock:
+  tf_serving_client: true

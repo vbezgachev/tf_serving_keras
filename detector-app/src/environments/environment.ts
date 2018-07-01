@@ -5,6 +5,7 @@
 
 export const environment = {
   production: false,
-  detectorServiceHost: '127.0.0.1',
-  detectorServicePort: 8005
+  detectorServiceHost: 'localhost',
+  detectorServicePort: 8001,
+  detectorApiBasePath: '/api/v1'
 };

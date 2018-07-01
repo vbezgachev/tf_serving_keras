@@ -6,7 +6,7 @@ import * as HttpStatus from 'http-status';
 import 'mocha';
 
 import { createApplication } from '../src/app';
-import { TfServingClientMock } from './tf.serving.client.mock';
+import { TfServingClientMock } from '../src/services/tf.serving.client.mock';
 
 const REQUEST_TIMEOUT_MS = 2000;
 chai.use(chaiHttp);
@@ -44,7 +44,7 @@ describe('detectorAPI', () => {
             .then(res => {
                 expect(res.status).to.eql(HttpStatus.OK);
                 expect(res.body).to.have.key('breed');
-                expect(res.body.breed).to.eql('MockBreed');
+                expect(res.body.breed).to.eql('Mock Breed');
             });
     }).timeout(REQUEST_TIMEOUT_MS);
 });

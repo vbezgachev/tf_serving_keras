@@ -25,9 +25,16 @@ export class DetectrorController implements interfaces.Controller {
     @httpPost('/predict_breed', upload.single('dog_image'))
     public async predictBreed(req: Request, res: Response): Promise<void> {
         console.log(`original file name: ${req.file.originalname}`);
+
         try {
             const dogBreed: string = await this.tfServingClient.predictDogBreed(req.file.buffer);
-            res.status(HttpStatus.OK).send({breed: dogBreed});
+            res.status(HttpStatus.OK)
+                .header({
+                    'Access-Control-Allow-Origin': '*',
+                })
+                .send({
+                    breed: dogBreed,
+                });
         }
         catch (err) {
             res.status(HttpStatus.SERVICE_UNAVAILABLE).send({
