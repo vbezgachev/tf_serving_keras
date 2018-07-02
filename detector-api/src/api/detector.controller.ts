@@ -1,7 +1,11 @@
+/**
+ * Detector controller thta implements our REST API
+ */
+
 import * as config from 'config';
 import { Request, Response } from 'express';
 import * as HttpStatus from 'http-status';
-import { inject, injectable } from 'inversify';
+import { inject } from 'inversify';
 import { controller, httpPost, interfaces } from 'inversify-express-utils';
 import * as multer from 'multer';
 
@@ -10,12 +14,18 @@ import TYPES from '../types';
 
 const UPLOAD_PATH = 'uploads';
 
+/**
+ * We use multer library for the image upload
+ */
 const storage = multer.memoryStorage();
 const upload = multer({
     dest: `${UPLOAD_PATH}/`,
     storage: storage,
 });
 
+/**
+ * Controller for the Inversify express server
+ */
 @controller(`${config.get<string>('api.base_path')}`)
 export class DetectrorController implements interfaces.Controller {
     public constructor(

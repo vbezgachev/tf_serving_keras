@@ -1,1 +1,4 @@
-export const UNKNOWN_BREED = '<UNKNOWN>';
+/**
+ * Contains helpers and constants
+ */
+export const UNKNOWN_BREED = '<Unknown Dog Breed>';

@@ -1,12 +1,22 @@
+/**
+ * The main component represents the main page of the application
+ * Allows to select dog images and displazs prediction results
+ */
 import { Component, OnInit } from '@angular/core';
 import { DetectorServiceClient } from './services/detector.service.client';
 import * as utils from './utils';
 
+/**
+ * Helper class fo a dog image and its breed
+ */
 class DogItem {
     public imageData: string;
     public breedName: string;
 }
 
+/**
+ * Main application component
+ */
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -23,12 +33,15 @@ export class AppComponent implements OnInit {
 
     ngOnInit() { }
 
+    // Reads the the dog image files when they are selected
     public filesPicked(files: FileList): void {
+        this.dogs = [];
         if (files[0]) {
             this.readFiles(files, 0);
         }
     }
 
+    // Read each file and create an entry (image + breed) to display
     private readFiles(files: FileList, idx: number) {
         this.fileReader.onload = () => {
             const dog = this.createDogEntry(this.fileReader.result, files[idx]);
@@ -44,6 +57,7 @@ export class AppComponent implements OnInit {
         this.fileReader.readAsDataURL(files[idx]);
     }
 
+    // Request the serving client for a dog breed by creation
     private createDogEntry(imageData: string, imageFile: File): DogItem {
         const dog = new DogItem();
         dog.imageData = imageData;

@@ -1,3 +1,9 @@
+/**
+ * Map of index to dog breed name. We get an array of probabilites from
+ * the Tensorflow Serving client and need to select a maximum probability.
+ * Its index indicates one of the known 133 breeds we have. Using the index
+ * we return a breed name using the map
+ */
 export const IndexToBreedMap: { [key: number]: string; } = {
     0: 'Affenpinscher',
     1: 'Afghan Hound',

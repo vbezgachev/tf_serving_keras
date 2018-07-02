@@ -1,3 +1,6 @@
+/**
+ * Mock of the Tensorflow Serving client
+ */
 import { TfServingClient } from './tf.serving.client';
 
 export class TfServingClientMock implements TfServingClient {
