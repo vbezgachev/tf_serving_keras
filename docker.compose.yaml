@@ -26,21 +26,24 @@ services:
       - NODE_CONFIG={
           "tf_serving":{
             "host":"detector-model-serving"
+          },
+          "mock":{
+            "tf_serving_client":false
           }
         }
       - NODE_ENV=docker
-    # depends_on:
-    #   - detector-model-serving
+    depends_on:
+      - detector-model-serving
 
-  # detector-model-serving:
-  #   networks:
-  #     - detector
-  #   container_name: detector-model-serving
-  #   build:
-  #     context: .
-  #     dockerfile: ./model_serving/Dockerfile
-  #   ports:
-  #     - '9000:9000'
+  detector-model-serving:
+    networks:
+      - detector
+    container_name: detector-model-serving
+    build:
+      context: ./model_serving
+      dockerfile: Dockerfile
+    ports:
+      - '9000:9000'
 
 networks:
   detector:

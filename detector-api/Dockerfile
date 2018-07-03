@@ -2,9 +2,17 @@ FROM node:8.11.3
 
 WORKDIR /detector_api
 
-COPY ./dist/package.json .
-COPY ./dist/config config
-COPY ./dist/build build
-COPY ./dist/node_modules node_modules
+COPY package.json .
+COPY package-lock.json .
+
+RUN npm install
+
+COPY config config
+COPY tslint.json tslint.json
+COPY tsconfig.json tsconfig.json
+
+COPY src src
+
+RUN npm run build
 
 CMD npm start

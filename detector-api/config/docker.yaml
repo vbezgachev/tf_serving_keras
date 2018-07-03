@@ -13,4 +13,4 @@ model:
   signature_name: 'serving_default'
 
 mock:
-  tf_serving_client: true
+  tf_serving_client: false

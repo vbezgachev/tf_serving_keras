@@ -26,7 +26,7 @@ export class DetectorServiceClient {
     public async predictDogBreed(imageFile: File): Promise<string> {
         const url = this.baseApiUrl + '/predict_breed';
 
-        console.error(`Will call API at ${url}`);
+        console.log(`Will call API at ${url}`);
 
         const headers = new HttpHeaders();
         headers.append('Content-Type', 'multipart/form-data');
