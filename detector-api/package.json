@@ -12,7 +12,9 @@
     "compile": "tsc",
     "compile:w": "tsc --watch",
     "copyFiles": "cpx \"src/protos/**\" build/protos/",
-    "clean": "rm -rf .tscache/ build/ node_modules/"
+    "clean": "rm -rf .tscache/ build/ node_modules/",
+    "prune:production": "npm prune --production && npm install --production",
+    "build_and_prune": "npm run build && npm run prune:production"
   },
   "author": "Vitaly Bezgachev, vitaly.bezgachev@gmail.com",
   "license": "MIT",
@@ -43,6 +45,7 @@
     "http-status": "^1.2.0",
     "inversify": "^4.13.0",
     "inversify-express-utils": "^6.1.0",
+    "js-yaml": "^3.12.0",
     "morgan": "^1.9.0",
     "multer": "^1.3.0",
     "reflect-metadata": "^0.1.12"

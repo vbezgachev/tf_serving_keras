@@ -74,3 +74,4 @@ typings/
 
 # build directory
 build/
+dist/

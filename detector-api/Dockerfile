@@ -1,11 +1,13 @@
 FROM node:8.11.3
 
-WORKDIR /detector-api
+WORKDIR /detector_api
 
-COPY package.json .
-COPY config config
-COPY build build
-COPY node_modules node_modules
+COPY ./dist/package.json .
+COPY ./dist/config config
+COPY ./dist/build build
+COPY ./dist/node_modules node_modules
 
-ENTRYPOINT ["npm"]
-CMD ["start"]
+# ENTRYPOINT ["npm"]
+# CMD ["start"]
+
+CMD ["/bin/bash"]

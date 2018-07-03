@@ -1,21 +1,16 @@
 # /bin/bash
 
-# clean previous builds
+# build the project in Docker
 echo "--------------------------------------------------"
-echo "Cleaning the project"
-npm run clean
-echo "--------------------------------------------------"
+echo "Building the project in Docker..."
+docker build -t detector_api_builder:latest -f Dockerfile.build .
+docker run --name detector_api_builder detector_api_builder:latest
 
-# install libraries
-echo "--------------------------------------------------"
-echo "Installing dependencies"
-npm install
-echo "--------------------------------------------------"
+docker cp detector_api_builder:/detector_api ./dist
 
-# build project
-echo "--------------------------------------------------"
-echo "Building the project"
-npm run build
+docker rm detector_api_builder
+docker rmi detector_api_builder:latest
+echo "...Build finished"
 echo "--------------------------------------------------"
 
 # create Docker container
