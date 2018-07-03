@@ -1,7 +1,7 @@
-version: '3.5'
+version: '3'
 
 services:
-  detector_app:
+  detector-app:
     networks:
       - detector
     container_name: detector-app
@@ -11,9 +11,9 @@ services:
     ports: 
       - '4200:4200'
     depends_on:
-      - detector_api
+      - detector-api
 
-  detector_api:
+  detector-api:
     networks:
       - detector
     container_name: detector-api
@@ -25,17 +25,17 @@ services:
     environment:
       - NODE_CONFIG={
           "tf_serving":{
-            "host":"tf_serving_keras_detector_model_serving"
+            "host":"detector-model-serving"
           }
         }
       - NODE_ENV=docker
     # depends_on:
-    #   - detector_model_serving
+    #   - detector-model-serving
 
-  # detector_model_serving:
+  # detector-model-serving:
   #   networks:
   #     - detector
-  #   container_name: detector_model_serving
+  #   container_name: detector-model-serving
   #   build:
   #     context: .
   #     dockerfile: ./model_serving/Dockerfile

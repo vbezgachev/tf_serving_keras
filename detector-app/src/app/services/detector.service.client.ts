@@ -26,6 +26,8 @@ export class DetectorServiceClient {
     public async predictDogBreed(imageFile: File): Promise<string> {
         const url = this.baseApiUrl + '/predict_breed';
 
+        console.error(`Will call API at ${url}`);
+
         const headers = new HttpHeaders();
         headers.append('Content-Type', 'multipart/form-data');
 
@@ -39,7 +41,7 @@ export class DetectorServiceClient {
 
             return (data.hasOwnProperty('breed') ? data['breed'] : utils.UNKNOWN_BREED);
         } catch (err) {
-            console.log(`Got error by calling API: ${err}`);
+            console.log(err);
             return utils.UNKNOWN_BREED;
         }
     }

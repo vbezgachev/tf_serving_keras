@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  detectorServiceHost: 'tf_serving_keras_detector_api',
+  detectorServiceHost: 'detector-api',
   detectorServicePort: 8001,
   detectorApiBasePath: '/api/v1'
 };

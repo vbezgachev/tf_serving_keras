@@ -1,21 +1,29 @@
 # /bin/bash
 
 # build the project in Docker
+DIST_DIR="./dist"
+BUILDER="detector-api-builder"
+RUNNER="detector-api"
+VERSION="latest"
+
 echo "--------------------------------------------------"
 echo "Building the project in Docker..."
-docker build -t detector_api_builder:latest -f Dockerfile.build .
-docker run --name detector_api_builder detector_api_builder:latest
+docker build -t $BUILDER:$VERSION -f Dockerfile.build .
+docker run --name $BUILDER $BUILDER:$VERSION
 
-docker cp detector_api_builder:/detector_api/ ./dist
+if [ -d "$DIST_DIR" ]; then
+    rm -rf $DIST_DIR
+fi
+docker cp $BUILDER:/detector_api/ $DIST_DIR
 
-docker rm detector_api_builder
-docker rmi detector_api_builder:latest
+docker rm $BUILDER
+docker rmi $BUILDER:$VERSION
 echo "...Build finished"
 echo "--------------------------------------------------"
 
 # create Docker container
-echo "--------------------------------------------------"
-echo "Building Docker container..."
-docker build -t detector_api:latest -f Dockerfile .
-echo "...Docker container is ready"
-echo "--------------------------------------------------"
+# echo "--------------------------------------------------"
+# echo "Building Docker container..."
+# docker build -t $RUNNER:$VERSION -f Dockerfile .
+# echo "...Docker container is ready"
+# echo "--------------------------------------------------"
