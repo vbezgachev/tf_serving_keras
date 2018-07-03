@@ -1,0 +1,47 @@
+version: '3.5'
+
+services:
+  detector_app:
+    networks:
+      - detector
+    container_name: detector-app
+    build:
+      context: ./detector-app/
+      dockerfile: Dockerfile
+    ports: 
+      - '4200:4200'
+    depends_on:
+      - detector_api
+
+  detector_api:
+    networks:
+      - detector
+    container_name: detector-api
+    build:
+      context: ./detector-api
+      dockerfile: Dockerfile
+    ports:
+      - '8001:8001'
+    environment:
+      - NODE_CONFIG={
+          "tf_serving":{
+            "host":"tf_serving_keras_detector_model_serving"
+          }
+        }
+      - NODE_ENV=docker
+    # depends_on:
+    #   - detector_model_serving
+
+  # detector_model_serving:
+  #   networks:
+  #     - detector
+  #   container_name: detector_model_serving
+  #   build:
+  #     context: .
+  #     dockerfile: ./model_serving/Dockerfile
+  #   ports:
+  #     - '9000:9000'
+
+networks:
+  detector:
+    driver: bridge

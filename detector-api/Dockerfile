@@ -7,7 +7,5 @@ COPY ./dist/config config
 COPY ./dist/build build
 COPY ./dist/node_modules node_modules
 
-# ENTRYPOINT ["npm"]
-# CMD ["start"]
-
-CMD ["/bin/bash"]
+ENTRYPOINT ["npm"]
+CMD ["start"]

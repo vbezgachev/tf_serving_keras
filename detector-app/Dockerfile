@@ -14,4 +14,4 @@ COPY .angular-cli.json .
 COPY e2e e2e
 COPY src src
 
-CMD ng serve --host 0.0.0.0 --port 4200
+CMD ng serve -e=docker --host 0.0.0.0 --port 4200
