@@ -6,7 +6,7 @@ echo "Building the project in Docker..."
 docker build -t detector_api_builder:latest -f Dockerfile.build .
 docker run --name detector_api_builder detector_api_builder:latest
 
-docker cp detector_api_builder:/detector_api ./dist
+docker cp detector_api_builder:/detector_api/ ./dist
 
 docker rm detector_api_builder
 docker rmi detector_api_builder:latest
