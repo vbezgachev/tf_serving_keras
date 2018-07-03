@@ -11,7 +11,8 @@
     "lint": "tslint --project tsconfig.json",
     "compile": "tsc",
     "compile:w": "tsc --watch",
-    "copyFiles": "cpx \"src/protos/**\" build/protos/"
+    "copyFiles": "cpx \"src/protos/**\" build/protos/",
+    "clean": "rm -rf .tscache/ build/ node_modules/"
   },
   "author": "Vitaly Bezgachev, vitaly.bezgachev@gmail.com",
   "license": "MIT",

@@ -1,6 +1,8 @@
 '''
 Trains the dog breed detector and saves the final model for the serving
 '''
+import os
+import shutil
 
 from glob import glob
 
@@ -10,6 +12,7 @@ from final_model import FinalModel
 from tensorflow.python.keras.applications.densenet import preprocess_input
 from tensorflow.python.keras.estimator import model_to_estimator
 import tensorflow as tf
+
 
 def preprocess_image(image_buffer, image_shape=(224, 224, 3)):
     '''
@@ -61,9 +64,13 @@ def export_for_serving(model):
 
     :param model: keras model to prepare for serving
     '''
+    export_dir = 'export_model/'
+    if os.path.exists(export_dir):
+        shutil.rmtree(export_dir)
+
     tf_estimator = model_to_estimator(keras_model=model)
     tf_estimator.export_savedmodel(
-        'export_model/',
+        export_dir,
         serving_input_receiver_fn,
         strip_default_attrs=True)
 
