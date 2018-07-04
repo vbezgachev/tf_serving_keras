@@ -1,16 +1,2 @@
-service:
-  port: 8001
-
-api:
-  base_path: '/api/v1'
-
 tf_serving:
-  host: 'detector_model_serving'
-  port: 9000
-
-model:
-  name: 'dog_breed'
-  signature_name: 'serving_default'
-
-mock:
-  tf_serving_client: false
+  host: 'detector-model-serving'

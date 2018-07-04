@@ -9,7 +9,7 @@ services:
       context: ./detector-app/
       dockerfile: Dockerfile
     ports: 
-      - '4200:4200'
+      - '80:80'
     depends_on:
       - detector-api
 
@@ -42,8 +42,8 @@ services:
     build:
       context: ./model_serving
       dockerfile: Dockerfile
-    ports:
-      - '9000:9000'
+    # ports:
+    #   - '9000:9000'
 
 networks:
   detector:
