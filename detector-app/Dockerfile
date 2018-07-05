@@ -21,7 +21,7 @@ COPY e2e e2e
 COPY src src
 
 # build and lint the application
-RUN ng build -prod -op ./dist -e docker -aot
+RUN ng build -prod -op ./dist -aot
 RUN ng lint
 
 #

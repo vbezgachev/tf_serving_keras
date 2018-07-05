@@ -3,7 +3,7 @@
  * Allows to select dog images and displazs prediction results
  */
 import { Component, OnInit } from '@angular/core';
-import { DetectorServiceClient } from './services/detector.service.client';
+import { DetectorServiceClient, DetectorServiceClientImpl } from './services/detector.service.client';
 import * as utils from './utils';
 
 /**
@@ -21,7 +21,7 @@ class DogItem {
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
-    providers: [DetectorServiceClient]
+    providers: [{ provide: DetectorServiceClient, useClass: DetectorServiceClientImpl }]
 })
 export class AppComponent implements OnInit {
     title: String = 'dog breed detector';
@@ -62,7 +62,7 @@ export class AppComponent implements OnInit {
         const dog = new DogItem();
         dog.imageData = imageData;
 
-        const dogBreedPredictionPromise: Promise<string> = this.tfServingClient.predictDogBreed(imageFile);
+        const dogBreedPredictionPromise: Promise<string> = this.tfServingClient.predictDogBreedByFile(imageFile);
 
         dogBreedPredictionPromise.then((res) => {
             dog.breedName = res;

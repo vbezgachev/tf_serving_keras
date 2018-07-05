@@ -7,5 +7,11 @@ export const environment = {
   production: false,
   detectorServiceHost: 'localhost',
   detectorServicePort: 8001,
-  detectorApiBasePath: '/api/v1'
+  detectorApiBasePath: '/api/v1',
+  useDetectorApi: true,
+  tfServingHost: 'localhost',
+  tfServingPort: 8501,
+  tfServingBasePath: '/v1/models',
+  modelName: 'dog_breed',
+  signature_name: 'serving_default'
 };

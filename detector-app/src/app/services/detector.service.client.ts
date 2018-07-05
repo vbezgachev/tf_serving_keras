@@ -2,16 +2,26 @@
  * Detector service client issues requests to the detector service via REST interface
  */
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
+import { environment } from '../../environments/environment';
 import * as utils from '../utils';
+import { notImplemented } from '@angular/core/src/render3/util';
 
 /**
+ * Detector service client interface
+ */
+export abstract class DetectorServiceClient {
+    abstract predictDogBreedByFile(imageFile: File): Promise<string>;
+    abstract predictDogBreedByData(imageData: string): Promise<string>;
+}
+
+/**
+ * Implements detector service client interface - sends REST requests to the API service
  * The client reads confuguration from the environment and issues a predict request
  */
 @Injectable()
-export class DetectorServiceClient {
+export class DetectorServiceClientImpl implements DetectorServiceClient {
     private baseApiUrl = `http://${environment.detectorServiceHost}:${environment.detectorServicePort}${environment.detectorApiBasePath}`;
 
     constructor(private http: HttpClient) {
@@ -23,7 +33,7 @@ export class DetectorServiceClient {
     // So it issues here a cross-origin request (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing).
     // The detector service must set the access control for it properly in response headers.
     // E.g. 'Access-Control-Allow-Origin': '*'
-    public async predictDogBreed(imageFile: File): Promise<string> {
+    public async predictDogBreedByFile(imageFile: File): Promise<string> {
         const url = this.baseApiUrl + '/predict_breed';
 
         console.log(`Will call API at ${url}`);
@@ -44,5 +54,9 @@ export class DetectorServiceClient {
             console.log(err);
             return utils.UNKNOWN_BREED;
         }
+    }
+
+    public async predictDogBreedByData(imageData: string): Promise<string> {
+        throw notImplemented();
     }
 }
