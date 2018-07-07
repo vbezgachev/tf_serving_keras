@@ -12,6 +12,7 @@ services:
       - '80:80'
     depends_on:
       - detector-api
+      - cors-anywhere
 
   detector-api:
     networks:
@@ -45,6 +46,18 @@ services:
     ports:
       - '9000:9000'
       - '8501:8501'
+
+  cors-anywhere:
+    networks:
+      - detector
+    container_name: cors-anywhere
+    build:
+      context: ./docker-cors-anywhere
+      dockerfile: Dockerfile
+    ports:
+      - '9501:9501'
+    depends_on:
+      - detector-model-serving
   
 networks:
   detector:
