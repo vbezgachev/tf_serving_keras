@@ -32,5 +32,6 @@ COPY export_model /serving/export_model
 
 # start the server
 EXPOSE 9000
+EXPOSE 8501
 ENTRYPOINT ["tensorflow_model_server"]
-CMD ["--port=9000", "--model_name=dog_breed", "--model_base_path=/serving/export_model"]
+CMD ["--port=9000", "--rest_api_port=8501", "--model_name=dog_breed", "--model_base_path=/serving/export_model"]

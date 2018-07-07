@@ -8,10 +8,12 @@ export const environment = {
   detectorServiceHost: 'localhost',
   detectorServicePort: 8001,
   detectorApiBasePath: '/api/v1',
-  useDetectorApi: true,
-  tfServingHost: 'localhost',
+  useDetectorApi: false,
+  tfServingHost: '172.17.0.2',
   tfServingPort: 8501,
   tfServingBasePath: '/v1/models',
   modelName: 'dog_breed',
-  signature_name: 'serving_default'
+  signature_name: 'serving_default',
+  corsAnywhereHost: 'localhost',
+  corsAnywherePort: 9501
 };

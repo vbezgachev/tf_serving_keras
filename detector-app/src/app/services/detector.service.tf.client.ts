@@ -7,24 +7,22 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import * as utils from '../utils';
 import { DetectorServiceClient } from './detector.service.client';
-import { notImplemented } from '@angular/core/src/render3/util';
+import { IndexToBreedMap } from './index.to.breed.map';
 
 /**
  * Implements detector service client interface - sends REST requests directly to
  * TensorFlow server
  */
 @Injectable()
-export class DetectorServiceTfClientImpl implements DetectorServiceClient {
-    private baseApiUrl = `http://${environment.tfServingHost}:${environment.tfServingPort}${environment.tfServingBasePath}`;
+export class DetectorServiceTfClient implements DetectorServiceClient {
+    private baseApiUrl =
+        `http://${environment.corsAnywhereHost}:${environment.corsAnywherePort}/` +
+        `${environment.tfServingHost}:${environment.tfServingPort}${environment.tfServingBasePath}`;
 
     constructor(private http: HttpClient) {
     }
 
-    public async predictDogBreedByFile(imageFile: File): Promise<string> {
-        throw notImplemented();
-    }
-
-    public async predictDogBreedByData(imageData: string): Promise<string> {
+    public async predictDogBreed(imageFile: File, imageData: string): Promise<string> {
         const url = this.baseApiUrl + `/${environment.modelName}:predict`;
 
         console.log(`Will call TF Serving at ${url}`);
@@ -33,6 +31,7 @@ export class DetectorServiceTfClientImpl implements DetectorServiceClient {
         headers.append('Content-Type', 'application/json');
 
         const requestObject = {
+            signature_name: environment.signature_name,
             instances: [
                 {
                     b64: imageData,
@@ -43,12 +42,20 @@ export class DetectorServiceTfClientImpl implements DetectorServiceClient {
         try {
             const data = await this.http.post(url, requestObject, { headers: headers }).toPromise();
 
-            console.log(`Received reponse from TF server: ${data}`);
+            const res = data['predictions'][0];
 
-            // TODO
+            const maxProb = Math.max(...res);
+            console.log(`Max probability: ${maxProb}`);
+
+            const indexOfMaxProb = res.indexOf(maxProb);
+            console.log(`Index of max probability: ${indexOfMaxProb}`);
+
+            if (indexOfMaxProb in IndexToBreedMap) {
+                console.log(`Detected breed: ${IndexToBreedMap[indexOfMaxProb]}`);
+                return IndexToBreedMap[indexOfMaxProb];
+            }
+
             return utils.UNKNOWN_BREED;
-
-            // return (data.hasOwnProperty('breed') ? data['breed'] : utils.UNKNOWN_BREED);
         } catch (err) {
             console.log(err);
             return utils.UNKNOWN_BREED;
