@@ -29,7 +29,7 @@ services:
             "host":"detector-model-serving"
           },
           "mock":{
-            "tf_serving_client":true
+            "tf_serving_client":false
           }
         }
       - NODE_ENV=docker
@@ -42,7 +42,7 @@ services:
     container_name: detector-model-serving
     build:
       context: ./model_serving
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.TF.Latest
     ports:
       - '9000:9000'
       - '8501:8501'

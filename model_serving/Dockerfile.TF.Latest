@@ -14,14 +14,16 @@ RUN echo "deb [arch=amd64] http://storage.googleapis.com/tensorflow-serving-apt 
 
 RUN curl https://storage.googleapis.com/tensorflow-serving-apt/tensorflow-serving.release.pub.gpg | sudo apt-key add -
 
-RUN sudo apt-get update && sudo apt-get install tensorflow-model-server
-
 # upgrade the packages. otherwise that TensorFlow Serving will not work
+RUN sudo apt-get update
 RUN apt-get install -y software-properties-common
 RUN add-apt-repository ppa:ubuntu-toolchain-r/test -y
 
 RUN apt-get update
 RUN apt-get dist-upgrade -y
+
+# install the latest version of TensorFlow Serving
+RUN sudo apt-get install tensorflow-model-server
 
 # create and change to working directory
 WORKDIR /serving
@@ -34,4 +36,4 @@ COPY export_model /serving/export_model
 EXPOSE 9000
 EXPOSE 8501
 ENTRYPOINT ["tensorflow_model_server"]
-CMD ["--port=9000", "--model_name=dog_breed", "--model_base_path=/serving/export_model"]
+CMD ["--port=9000", "--rest_api_port=8501", "--rest_api_timeout_in_ms=600000", "--model_name=dog_breed", "--model_base_path=/serving/export_model"]

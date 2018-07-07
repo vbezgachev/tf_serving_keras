@@ -28,7 +28,7 @@ services:
             "host":"detector-model-serving"
           },
           "mock":{
-            "tf_serving_client":true
+            "tf_serving_client":false
           }
         }
       - NODE_ENV=docker
