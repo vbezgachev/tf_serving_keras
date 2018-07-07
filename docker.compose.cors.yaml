@@ -52,7 +52,7 @@ services:
       - detector
     container_name: cors-anywhere
     build:
-      context: ./docker-cors-anywhere
+      context: ./cors-anywhere
       dockerfile: Dockerfile
     ports:
       - '9501:9501'

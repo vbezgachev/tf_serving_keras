@@ -1,0 +1,16 @@
+{
+  "name": "docker-cors-anywhere",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo 'no tests yet...' && exit 0",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors-anywhere": "^0.2.3"
+  }
+}
