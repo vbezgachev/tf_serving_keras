@@ -11,30 +11,7 @@ services:
     ports: 
       - '80:80'
     depends_on:
-      - detector-api
       - cors-anywhere
-
-  detector-api:
-    networks:
-      - detector
-    container_name: detector-api
-    build:
-      context: ./detector-api
-      dockerfile: Dockerfile
-    ports:
-      - '8001:8001'
-    environment:
-      - NODE_CONFIG={
-          "tf_serving":{
-            "host":"detector-model-serving"
-          },
-          "mock":{
-            "tf_serving_client":false
-          }
-        }
-      - NODE_ENV=docker
-    depends_on:
-      - detector-model-serving
 
   detector-model-serving:
     networks:
