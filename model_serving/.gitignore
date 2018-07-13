@@ -10,7 +10,6 @@ export/
 dog_images/
 bottleneck_features/
 .ipynb_checkpoints/
-export_model/
 saved_model/
 
 tensorflow/
