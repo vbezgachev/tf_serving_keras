@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Modifications copyright (C) 2013 Vitaly Bezgachev, vitaly.bezgachev@gmail.com
+# Modifications copyright (C) 2018 Vitaly Bezgachev, vitaly.bezgachev@gmail.com
 #
 
 FROM ubuntu:16.04
