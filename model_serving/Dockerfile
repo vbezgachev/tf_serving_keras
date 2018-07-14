@@ -1,29 +1,40 @@
-FROM nvidia/cuda:9.0-cudnn7-runtime-ubuntu16.04
+# Copyright 2018 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# Modifications copyright (C) 2013 Vitaly Bezgachev, vitaly.bezgachev@gmail.com
+#
 
-# install necessary utilities
+FROM ubuntu:16.04
+
 RUN apt-get update && apt-get install -y \
         curl \
-        sudo \
-        && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+        gnupg
 
-# install TensorFlow Serving server
-RUN echo "deb [arch=amd64] http://storage.googleapis.com/tensorflow-serving-apt stable tensorflow-model-server tensorflow-model-server-universal" | \
-	sudo tee /etc/apt/sources.list.d/tensorflow-serving.list
+# Install TF Serving pkg.
+ARG TF_SERVING_VERSION=1.8.0
+# Use tensorflow-model-server-universal for older hardware
+ARG TF_SERVING_PKGNAME=tensorflow-model-server
+RUN curl -LO https://storage.googleapis.com/tensorflow-serving-apt/pool/${TF_SERVING_PKGNAME}-${TF_SERVING_VERSION}/t/${TF_SERVING_PKGNAME}/${TF_SERVING_PKGNAME}_${TF_SERVING_VERSION}_all.deb ; \
+        dpkg -i ${TF_SERVING_PKGNAME}_${TF_SERVING_VERSION}_all.deb ; \
+        rm ${TF_SERVING_PKGNAME}_${TF_SERVING_VERSION}_all.deb
 
-RUN curl https://storage.googleapis.com/tensorflow-serving-apt/tensorflow-serving.release.pub.gpg | sudo apt-key add -
+# Cleanup to reduce the size of the image
+# See https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#run
+RUN  apt-get clean && \
+        rm -rf /var/lib/apt/lists/*
 
-RUN sudo apt-get update && sudo apt-get install tensorflow-model-server
-
-# upgrade the packages. otherwise that TensorFlow Serving will not work
-RUN apt-get install -y software-properties-common
-RUN add-apt-repository ppa:ubuntu-toolchain-r/test -y
-
-RUN apt-get update
-RUN apt-get dist-upgrade -y
-
-# create and change to working directory
+# create working directory
 WORKDIR /serving
 
 # copy the prepared for serving model
@@ -33,5 +44,4 @@ COPY export_model /serving/export_model
 # start the server
 EXPOSE 9000
 EXPOSE 8501
-ENTRYPOINT ["tensorflow_model_server"]
-CMD ["--port=9000", "--model_name=dog_breed", "--model_base_path=/serving/export_model"]
+ENTRYPOINT tensorflow_model_server --port=9000 --rest_api_port=8501 --model_name=dog_breed --model_base_path=/serving/export_model

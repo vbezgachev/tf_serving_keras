@@ -19,7 +19,7 @@ services:
     container_name: detector-model-serving
     build:
       context: ./model_serving
-      dockerfile: Dockerfile.TF.Latest
+      dockerfile: Dockerfile
     ports:
       - '9000:9000'
       - '8501:8501'
