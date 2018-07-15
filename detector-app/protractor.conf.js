@@ -34,9 +34,3 @@ exports.config = {
     jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
   }
 };
-
-if (process.env.TRAVIS) {
-  exports.config.capabilities = {
-        browserName: 'firefox'
-    };
-}
