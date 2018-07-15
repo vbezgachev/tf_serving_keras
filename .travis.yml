@@ -11,6 +11,9 @@ matrix:
     
     - language: node_js
       dist: trusty
+      cache:
+        directories:
+          - node_modules
       addons:
         chrome: stable
       before_script:
