@@ -11,8 +11,8 @@ For details see my blog post [From Keras model to Angular application](https://t
 I created a CNN model for a dog breed prediction based on my [learning project](https://github.com/Vetal1977/aind2-dog-project). I used [Keras](https://github.com/keras-team/keras) for the model implementation to simplify the things. Then I exported it and prepared to be served by a [TensorFlow Serving](https://github.com/tensorflow/serving) server.
 
 ### Detector API
-Since the TensorFlow serving speaks [gRPC](https://grpc.io/) I created a web service that provides an API
-via the REST interface. It is, actually, a facade that hides gRPC protocol with HTTP protocol that is visible to the outside world.  
+Since the TensorFlow serving talks [gRPC](https://grpc.io/) I created a web service that provides an API
+via the REST interface. It is, actually, a facade that hides gRPC protocol with HTTP protocol, which is visible to the outside world.  
 The service is implemented as a [NodeJS express](https://expressjs.com/) application.
 
 ### Detector Application
