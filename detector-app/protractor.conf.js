@@ -9,9 +9,17 @@ exports.config = {
     './e2e/**/*.e2e-spec.ts'
   ],
   capabilities: {
-    'browserName': 'chrome'
+    browserName: 'chrome',
+    chromeOptions: {
+      args: [
+        '--headless',
+        '--disable-gpu',
+        '--lang=en',
+        '--window-size=' + DEFAULT_WINDOW_WIDTH + ',' + DEFAULT_WINDOW_HEIGHT
+      ]
+    },
   },
-  directConnect: true,
+  directConnect: false,
   baseUrl: 'http://localhost:4200/',
   framework: 'jasmine',
   jasmineNodeOpts: {
@@ -26,3 +34,9 @@ exports.config = {
     jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
   }
 };
+
+if (process.env.TRAVIS) {
+  exports.config.capabilities = {
+        browserName: 'firefox'
+    };
+}
