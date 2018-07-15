@@ -1,8 +1,11 @@
+[![Build Status](https://travis-ci.org/Vetal1977/tf_serving_keras.svg?branch=master)](https://travis-ci.org/Vetal1977/tf_serving_keras)
+
 ## Dog breed detector
 It is a sample application to detect a dog breed on the image. It consists of 3 parts:
 - Model creation, training and preparing for serving
 - Detector API that provides a REST interface for the prediction
 - Angular application that allows dog image selection and displays prediction results
+For details see my blog post [From Keras model to Angular application](https://towardsdatascience.com/from-keras-model-to-angular-application-491d3f6c4455)
 
 ### Model
 I created a CNN model for a dog breed prediction based on my [learning project](https://github.com/Vetal1977/aind2-dog-project). I used [Keras](https://github.com/keras-team/keras) for the model implementation to simplify the things. Then I exported it and prepared to be served by a [TensorFlow Serving](https://github.com/tensorflow/serving) server.
