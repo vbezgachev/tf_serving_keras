@@ -1,17 +1,21 @@
 matrix:
   include:
     - language: node_js
+      dist: trusty
       before_script:
         - cd detector-api
         - npm install
-        - npm run build
       script:
+        - npm run build
         - npm run test
     
     - language: node_js
+      dist: trusty
+      addons:
+        chrome: stable
       before_script:
         - cd detector-app
         - npm install
-        - npm run build
       script:
+        - npm run build
         - npm run test
