@@ -1,6 +1,6 @@
 matrix:
   include:
-    - language: node.js
+    - language: node_js
       before_script:
         - cd detector-api
         - npm install
@@ -8,7 +8,7 @@ matrix:
       script:
         - npm run test
     
-    - language: node.js
+    - language: node_js
       before_script:
         - cd detector-app
         - npm install
