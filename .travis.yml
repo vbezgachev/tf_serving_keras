@@ -1,7 +1,6 @@
 matrix:
   include:
     - language: node_js
-      dist: trusty
       before_script:
         - cd detector-api
         - npm install
@@ -10,16 +9,14 @@ matrix:
         - npm run test
     
     - language: node_js
-      dist: trusty
       cache:
         directories:
           - node_modules
       addons:
-        chrome: stable
+        firefox: latest
+      before_install:
+        - export DISPLAY=:99.0
+        - sh -e /etc/init.d/xvfb start
+        - sleep 3
       before_script:
         - cd detector-app
-        - npm install
-      script:
-        - npm run build
-        - npm run test
-        - xvfb-run npm run e2e
