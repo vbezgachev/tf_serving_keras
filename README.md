@@ -1,6 +1,6 @@
 ## Dog breed detector
 It is a sample application to detect a dog breed on the image. It consists of 3 parts:
-- Model creation, training and preparing for serving
+- Create and train a model, and preparit for serving
 - Detector API that provides a REST interface for the prediction
 - Angular application that allows dog image selection and displays prediction results
 For details see my blog post [From Keras model to Angular application](https://towardsdatascience.com/from-keras-model-to-angular-application-491d3f6c4455)
