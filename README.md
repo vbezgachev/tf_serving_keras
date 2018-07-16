@@ -14,4 +14,4 @@ via the REST interface. It is, actually, a facade that hides gRPC protocol with 
 The service is implemented as a [NodeJS express](https://expressjs.com/) application.
 
 ### Detector Application
-I created an [Angular](https://angular.io) application that allows to select the images for prediction and displays the results. It is very simple and not nice - I just wanted to demonstrate how to build the pipeline from UI to the backend service and model hosted by TensorFlow Serving server.
+I created an [Angular](https://angular.io) application that allows to select the images for prediction and displays the results. It is very simple and not nice, I just wanted to demonstrate how to build the pipeline from UI to the backend service and model hosted by TensorFlow Serving server.
