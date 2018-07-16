@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/Vetal1977/tf_serving_keras.svg?branch=master)](https://travis-ci.org/Vetal1977/tf_serving_keras)
-
 ## Dog breed detector
 It is a sample application to detect a dog breed on the image. It consists of 3 parts:
 - Model creation, training and preparing for serving
