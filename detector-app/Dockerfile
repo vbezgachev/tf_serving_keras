@@ -11,7 +11,7 @@ ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
 COPY package.json .
 RUN npm install
-RUN npm install -g @angular/cli
+RUN npm install -g @angular/cli@1.7.4
 
 # copy sources
 COPY tslint.json tslint.json
